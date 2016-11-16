@@ -143,7 +143,7 @@ describe('SurveyCTO Parser Module',function(){
   })
 
   it("parsing correctly",function(done){
-    var testString = require('./test.js');
+    var testString = require('./testJSON.js');
     var parseGender = function(x){
       if (x === "Female") {
         return "F ♀"
