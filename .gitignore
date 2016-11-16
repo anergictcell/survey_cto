@@ -1,2 +1,5 @@
 # Node modules
 node_modules/
+
+# Example file for real-world testing
+example.js
