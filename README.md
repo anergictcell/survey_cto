@@ -33,7 +33,7 @@ module.exports = {
 
 ## Normal workflow
 ```js
-var SurveyCTO = require('./index.js')
+var SurveyCTO = require('survey_cto')
 SurveyCTO
   .addColumns(["SubmissionDate"],"Date")
   .addColumns(["instanceID","KEY"],"String")
@@ -84,10 +84,8 @@ req.formId('My_Test_form')
 ## Converting data
 By default, all data in SurveyCTO's form-data is stored as `String` If you want to convert those strings to other datatypes:
 ```js
-var Parser = require('./lib/Parser.js')
-  parser = new Parser();
-
-parser.addColumns(["columnName1","columnName2"],"Number") // converts all columnName1, columnName2 data into Numbers
+var surveyCTO = require('survey_cto')
+surveyCTO.addColumns(["columnName1","columnName2"],"Number") // converts all columnName1, columnName2 data into Numbers
   .addColumns(["columnName3"],"Date") // converts all columnName3 data into Dates
   .addColumns(["columnName4"],"Array") // splits the data of columnName4 into an Array
   .addColumns(["columnName5"],"Number-Array") // splits the data of columnName5 into an Array and converts each element to a Number
@@ -97,10 +95,8 @@ parser.addColumns(["columnName1","columnName2"],"Number") // converts all column
 Merge data from the wide-JSON into a nested Object:
 ```js
 // wideJson = {"Meeting":"1","name_1":"Bob","name_2":"Alice","name_3":"Paul","age_1":"21","age_2":"25","age_3":"31"}
-var Parser = require('./lib/Parser.js')
-  parser = new Parser();
-
-parser.addRepeat("attendance") // defines a new key with the name attendance
+var surveyCTO = require('survey_cto')
+surveyCTO.addRepeat("attendance") // defines a new key with the name attendance
   .addToRepeat("attendance",["name"],"String") // {"Meeting":"1","attendance":[{"name":"Bob"},{"name":"Alice"},{"name":"Paul"}]}
   .addToRepeat("attendance",["age"],"Number")  // {"Meeting":"1","attendance":[{"name":"Bob","age":21},{"name":"Alice","age":25},{"name":"Paul","age":31}]}
 ```
@@ -112,7 +108,7 @@ TBD
 #### <i>surveyCTO</i>.<b>addColumns</b>(<i>Array</i>,<i>Type</i>/<i>Function</i>)
 Ensures the data in the columns as defined in `Array` will be converted to type `Type` or via function `Function`.
 ```js
-SurveyCTO
+surveyCTO
   .addColumns(["SubmissionDate"],"Date")
   .addColumns(["instanceID","KEY"],"String")
   .addColumns(["doubleColumn"],x => x*2)
@@ -121,14 +117,14 @@ SurveyCTO
 #### <i>surveyCTO</i>.<b>addRepeat</b>(<i>name</i>)
 Tells the parser to add a column with the given name to store repeat data in. The actual data to be stored within the repeat must be defined via <i>surveyCTO</i>.<b>addToRepeat</b>.
 ```js
-SurveyCTO
+surveyCTO
   .addRepeat("myRepeatName")
 ```
 
 #### <i>surveyCTO</i>.<b>addToRepeat</b>(<i>name</i>,<i>Array</i>,<i>Type</i>/<i>Function</i>)
 Ensures that the data from the columns as defined in `Array` will be converted to type `Type` or via function `Function` and stored in repeat `name`. Requires that the repeat has been defined via <i>surveyCTO</i>.<b>addRepeat</b>.
 ```js
-SurveyCTO
+surveyCTO
   .addRepeat("myRepeatName")
   .addToRepeat("myRepeat",["repeatField"],"String")
   .addToRepeat("myRepeat",["anotherRepeatField"],x=>x*2)
