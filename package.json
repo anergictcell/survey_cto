@@ -1,0 +1,31 @@
+{
+  "name": "survey_cto",
+  "version": "1.0.0",
+  "description": "A module to download and parse form-data from SurveyCTO REST API. It converts wide-JSON to nested JSON Objects and takes care of type conversion",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "keywords": [
+    "node",
+    "nodeJS",
+    "SurveyCTO",
+    "ODK"
+  ],
+    "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anergictcell/survey_cto.git"
+  },
+  "author": "Jonas Marcello @ Educate! <jonas@experienceeducate.org>",
+  "license": "ISC",
+  "dependencies": {
+    "request":"^2.78.0"
+  },
+  "devDependencies": {
+    "jasmine": "^2.5.2"
+  },
+  "bugs": {
+    "url": "https://github.com/anergictcell/survey_cto/issues"
+  },
+  "homepage": "https://github.com/anergictcell/survey_cto#readme"
+}
