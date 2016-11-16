@@ -21,20 +21,19 @@ This module fills the gap by providing a simple API to download and parse the fo
 
 
 ## Setup
-Before you start, you need to create a `config.js` file in the root directory of the module. Please make sure to exclude this file from version control, such as git.
+The SurveyCTO module works with global setting for the servername and authentification. Make sure to set them when first loading the module.
 ```js
-config.js
-module.exports = {
-  url:"https://myServerName.surveycto.com/api/v1/forms/data/wide/json/",
-  username : "me@example.com",
-  password : "Pa55w0rd"
-}
+var surveyCTO = require('survey-cto')
+var servername = "myServerName" // don't use the full domain, just your servername
+var username = "myUserName"
+var password = "Pa55w0rd"
+surveycto.config(servername,username,password)
+//
 ```
 
 ## Normal workflow
 ```js
-var SurveyCTO = require('survey_cto')
-SurveyCTO
+surveyCTO
   .addColumns(["SubmissionDate"],"Date")
   .addColumns(["instanceID","KEY"],"String")
   .addColumns(["repeatCount"],"Number")
@@ -84,7 +83,6 @@ req.formId('My_Test_form')
 ## Converting data
 By default, all data in SurveyCTO's form-data is stored as `String` If you want to convert those strings to other datatypes:
 ```js
-var surveyCTO = require('survey_cto')
 surveyCTO.addColumns(["columnName1","columnName2"],"Number") // converts all columnName1, columnName2 data into Numbers
   .addColumns(["columnName3"],"Date") // converts all columnName3 data into Dates
   .addColumns(["columnName4"],"Array") // splits the data of columnName4 into an Array
@@ -95,7 +93,6 @@ surveyCTO.addColumns(["columnName1","columnName2"],"Number") // converts all col
 Merge data from the wide-JSON into a nested Object:
 ```js
 // wideJson = {"Meeting":"1","name_1":"Bob","name_2":"Alice","name_3":"Paul","age_1":"21","age_2":"25","age_3":"31"}
-var surveyCTO = require('survey_cto')
 surveyCTO.addRepeat("attendance") // defines a new key with the name attendance
   .addToRepeat("attendance",["name"],"String") // {"Meeting":"1","attendance":[{"name":"Bob"},{"name":"Alice"},{"name":"Paul"}]}
   .addToRepeat("attendance",["age"],"Number")  // {"Meeting":"1","attendance":[{"name":"Bob","age":21},{"name":"Alice","age":25},{"name":"Paul","age":31}]}

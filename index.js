@@ -23,38 +23,72 @@
 var Request = require("./lib/Request.js")
 var Parser = require("./lib/Parser.js")
 
-var parser = new Parser()
-var req = new Request()
+var config = undefined
+function configureReqest(servername,username,password){
+  if (arguments.length === 3){
+    config = {
+      "servername":servername,
+      "username":username,
+      "password":password
+    }
+    return true
+  } else {
+    throw new Error("SurveyCTO config requires 3 arguments")
+  }
+}
 
-var getAndParse = function(resolve,reject){
-  return new Promise(function(resolve,reject){
-    req.get()
-      .then(parser.parse)
-      .then(resolve)
-      .catch(reject)
-  })
+function initializeModule(){
+  var parser = new Parser()
+  var req = new Request()
+    .servername(config.servername)
+    .auth(config.username,config.password)
+
+  function getAndParse(resolve,reject){
+    return new Promise(function(resolve,reject){
+      req.get()
+        .then(parser.parse)
+        .then(resolve)
+        .catch(reject)
+    })
+  }
+  return {
+    addColumns : function(columns,type){
+      parser.addColumns(columns,type)
+      return this;
+    },
+    addRepeat : function(name){
+      parser.addRepeat(name)
+      return this
+    },
+    addToRepeat : function(name,columns,type){
+      parser.addToRepeat(name,columns,type)
+      return this
+    },
+    parser: function(){
+      return parser
+    },
+    formId : function(idString){
+      req.formId(idString)
+      return this
+    },
+    lastDate : function(date){
+      req.lastDate(date)
+      return this;
+    },
+    request : function(){
+      return req
+    },
+    getAndParse : getAndParse
+  }
 }
 
 module.exports = {
-  addColumns : function(columns,type){
-    parser.addColumns(columns,type)
-    return this;
-  },
-  addRepeat : function(name){
-    parser.addRepeat(name)
-    return this
-  },
-  addToRepeat : function(name,columns,type){
-    parser.addToRepeat(name,columns,type)
-    return this
-  },
-  formId : function(idString){
-    req.formId(idString)
-    return this
-  },
-  lastDate : function(date){
-    req.lastDate(date)
-    return this;
-  },
-  getAndParse : getAndParse
+  config: configureReqest,
+  init: function(){
+    if (!config) {
+      throw new Error("SurveyCTO server credentials not yet specified")
+    } else {
+      return initializeModule() 
+    }
+  }
 }

@@ -111,6 +111,15 @@ describe('SurveyCTO Parser Module',function(){
     expect(parser.columns()[0].fn("")).toEqual(false)
   })
 
+  it("Correclty converting 'NO' to Boolean",function(){
+    var cols = ["col1","col2"],
+    type = "Boolean";
+
+    parser.addColumns(cols,type)
+
+    expect(parser.columns()[0].fn("NO")).toEqual(false)
+  })
+
 
   it("Adding groups to a repeat group",function(){
     var name = "testRepeat",

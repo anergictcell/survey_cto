@@ -15,4 +15,10 @@ describe('SurveyCTO Request Module',function(){
     req.lastDate(lastDate)
     expect(req.lastDate()).toEqual(lastDate)
   })
+
+  it("req.servername should set the servername",function(){
+    var servername = "testme"
+    req.servername(servername)
+    expect(req.servername()).toEqual(servername)
+  })
 })
