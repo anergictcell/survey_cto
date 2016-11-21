@@ -127,6 +127,12 @@ surveyCTO
   .addToRepeat("myRepeat",["anotherRepeatField"],x=>x*2)
 ```
 
+#### <i>surveyCTO</i>.<b>renameColumns</b>(<i>{key:value}</i>)
+Converts the names of columns from `key` to `value` during parsing.
+```js
+surveyCTO
+  .renameColumns({"oldName_1":"newNameOne","anotherWeirdColumName":"shortname"})
+```
 
 
 
