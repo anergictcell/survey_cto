@@ -64,6 +64,10 @@ function initializeModule(){
       parser.addToRepeat(name,columns,type)
       return this
     },
+    renameColumns: function(cols){
+      parser.renameColumns(cols)
+      return this;
+    },
     parser: function(){
       return parser
     },

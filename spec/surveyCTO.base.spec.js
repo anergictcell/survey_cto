@@ -2,6 +2,7 @@
 var surveyCTO = require('../index.js')
 var servername = "svname"
 var newName = "aNewServerName"
+var prototypes = ["addColumns","addRepeat","addToRepeat","parser","renameColumns","formId","lastDate","request","getAndParse"].sort()
 
 describe("SurveyCTO Base functions",function(){
   it("should not allow to set incomplete config",function(){
@@ -19,9 +20,8 @@ describe("SurveyCTO Base functions",function(){
   })
 
   it("should be able to initialize and return functions",function(){
-    var keys = ["addColumns","addRepeat","addToRepeat","parser","formId","lastDate","request","getAndParse"].sort()
     var x = surveyCTO.init()
-    expect(Object.keys(x).sort()).toEqual(keys)
+    expect(Object.keys(x).sort()).toEqual(prototypes)
   })
 })
 
@@ -31,6 +31,13 @@ describe("Setting and getting variables",function(){
     var temp = surveyCTO.init()
     temp.formId(id)
     expect(temp.request().formId()).toEqual(id)
+  })
+
+  it("should be able to rename columns",function(){
+    var cols = {"old1":"new1", "old2":"new2"};
+    var temp = surveyCTO.init()
+      .renameColumns(cols)
+    expect(temp.parser().renameColumns()).toEqual(cols)
   })
 
   it("New initialized Request is blank",function(){
@@ -45,15 +52,15 @@ describe("Starting an additional SurveyCTO instance",function(){
   var newsCTO = require('../index.js')
 
   it("Old instance should contain config data",function(){
-    var keys = ["addColumns","addRepeat","addToRepeat","parser","formId","lastDate","request","getAndParse"].sort()
+    // checks that init() doesn't throw an error
     var x = surveyCTO.init()
-    expect(Object.keys(x).sort()).toEqual(keys)
+    expect(Object.keys(x).sort()).toEqual(prototypes)
   })
 
   it("New instance should contain config data",function(){
-    var keys = ["addColumns","addRepeat","addToRepeat","parser","formId","lastDate","request","getAndParse"].sort()
+    // checks that init() doesn't throw an error
     var x = newsCTO.init()
-    expect(Object.keys(x).sort()).toEqual(keys)
+    expect(Object.keys(x).sort()).toEqual(prototypes)
   })
 
   it("New instance should have servername set from first instance",function(){
