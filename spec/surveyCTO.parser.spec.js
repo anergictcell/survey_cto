@@ -18,6 +18,12 @@ describe('SurveyCTO Parser Module',function(){
     expect(parser.columns()).toEqual(expRes)
   })
 
+  it("renameColumns should define column renaming defs",function(){
+    var cols = {"old1":"new1", "old2":"new2"}
+    parser.renameColumns(cols)
+    expect(parser.renameColumns()).toEqual(cols)
+  })
+
   it("calling addColumns multiple times adds to columns array",function(){
     var cols1 = ["col1","col2"],
     fn1 = x=>x*2,
@@ -167,6 +173,11 @@ describe('SurveyCTO Parser Module',function(){
       .addToRepeat("otherTeacher",["other_pos"],"Number")
       .addToRepeat("otherTeacher",["gender_othermale","gender_otherfemale"],"Boolean")
       .addToRepeat("otherTeacher",["other_gen"],"Number")
+      .renameColumns({
+        "numofteachers":"nTeachers",
+        "male_teachers":"nMale",
+        "female_teachers":"nFemale",
+      })
       .parse(testString.raw)
       .then(function(res){
         expect(JSON.stringify(res))
