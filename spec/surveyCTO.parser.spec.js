@@ -59,8 +59,8 @@ describe('SurveyCTO Parser Module',function(){
   it("Correclty converting Date",function(){
     var cols = ["col1","col2"],
     type = "Date",
-    dateString = 'Wed Nov 16 2016 11:25:55 GMT+0300 (EAT)',
-    date = new Date(dateString);
+    dateString = 'Jun 23, 2016 10:20:52 PM',
+    date = new Date(dateString + " GMT");
     parser.addColumns(cols,type)
     expect(parser.columns()[0].fn(dateString)).toEqual(date)
   })
