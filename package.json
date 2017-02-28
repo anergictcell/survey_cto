@@ -1,6 +1,6 @@
 {
   "name": "survey_cto",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "A module to download and parse form-data from SurveyCTO REST API. It converts wide-JSON to nested JSON Objects and takes care of type conversion",
   "main": "index.js",
   "scripts": {
